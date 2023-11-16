@@ -7,7 +7,7 @@ import { sessionStorageServiceInstance } from '../service/common/SessionStorageS
 interface PageConfigProps {
 
   children: React.ReactNode;
-  requireAuth: boolean;
+  requireAuth?: boolean;
 }
 
 /**
@@ -17,22 +17,22 @@ interface PageConfigProps {
  */
 const PageConfig = (props: PageConfigProps): JSX.Element => {
 
-  const { children, requireAuth } = props;
+  const { children, requireAuth = true } = props;
   const { pathname, search, state } = useLocation();
 
   if (
     requireAuth &&
-    !sessionStorageServiceInstance.getUserId()
+    !sessionStorageServiceInstance.getUserToken()
   ) {
-    return <Navigate replace to={'/login'} />;
+    return <Navigate replace to={'/'} />;
   }
 
   if (
     !requireAuth &&
-    sessionStorageServiceInstance.getUserId() &&
+    sessionStorageServiceInstance.getUserToken() &&
     unAuthRoutes.findIndex((target) => target.toLowerCase() === pathname.toLowerCase()) >= 0
   ) {
-    return <Navigate replace to={'/'} />;
+    return <Navigate replace to={'/todos'} />;
   }
 
   return (
@@ -49,5 +49,6 @@ export default PageConfig;
  * @description 비 로그인 상태에서만 접근할 수 있는 화면 목록
  */
 const unAuthRoutes = [
+  '/',
   '/login'
 ]

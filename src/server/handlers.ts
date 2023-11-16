@@ -1,15 +1,41 @@
 import { rest } from 'msw';
-import { AddressTreeNode, addressTrees } from './data/data';
+import { AddressTreeNode, addressTrees, todoList } from './data/data';
 
 export function handlers() {
   return [
+    rest.get('/login', loginHandler),
+    rest.get('/logout', logoutHandler),
+    rest.get('/api/me', getMe),
+    rest.get('/todos/list', getTodoList),
     rest.get('/api/apt-addresses', getAptAddresses),
     rest.get('/api/regions', getRegions),
-    rest.get('/api/me', getMe),
     rest.post('/api/loan-inquiry', postLoanInquiry),
     rest.get('/api/loan-inquiry/progress', getLoanInquiryProgress),
     rest.get('/api/loan-inquiry/result', getLoanInquiryResult),
   ];
+}
+
+const loginHandler: Parameters<typeof rest.get>[1] = (_, res, ctx) => {
+  return res(
+    ctx.status(200),
+    ctx.json({
+      userToken: 'abcd'
+    })
+  )
+}
+const logoutHandler: Parameters<typeof rest.get>[1] = (_, res, ctx) => {
+  return res(
+    ctx.status(200),
+  )
+}
+
+const getTodoList: Parameters<typeof rest.get>[1] = (_, res, ctx) => {
+  return res(
+    ctx.status(200),
+    ctx.json({
+      list: todoList
+    })
+  )
 }
 
 const getMe: Parameters<typeof rest.get>[1] = (_, res, ctx) => {

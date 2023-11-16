@@ -117,3 +117,10 @@ const 증권시: AddressTreeNode = {
 };
 
 export const addressTrees = [코어시, 뱅크시, 증권시];
+
+export const todoList = new Array(10).fill(null).map((_, idx) => {
+  return {
+    id: idx,
+    title: `오늘할일 - ${idx}`
+  }
+});

@@ -3,20 +3,20 @@
 
 class SessionStorageService {
 
-  public getUserId = () => {
-    return this.getSessionStorageValue('userId');
+  public getUserToken = () => {
+    return this.getSessionStorageValue('userToken');
   };
 
   private getSessionStorageValue = (key: string) => {
     return sessionStorage.getItem(key);
   };
 
-  public setUserId = (userId: string): void => {
-    this.setSessionStorageValue('userId', userId);
+  public setUserToken = (userToken: string): void => {
+    this.setSessionStorageValue('userToken', userToken);
   };
 
-  public deleteUserId = (): void => {
-    this.removeSessionStorageValue('userId');
+  public deleteUserToken = (): void => {
+    this.removeSessionStorageValue('userToken');
   };
 
 

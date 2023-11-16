@@ -13,7 +13,6 @@ const Layout = (props: LayoutProps): JSX.Element => {
   return (
     <CustomErrorBoundary>
       <Suspense fallback={<div>로딩중~~</div>}>
-        <AppBar />
         <Outlet />
       </Suspense>
     </CustomErrorBoundary>
@@ -23,10 +22,3 @@ const Layout = (props: LayoutProps): JSX.Element => {
 }
 export default Layout;
 
-const AppBar = () => {
-  const { FetchUserInfo } = useTodoQueries();
-  const { data = { name: '' }, isFetching } = FetchUserInfo();
-  return (
-    <div></div>
-  );
-}

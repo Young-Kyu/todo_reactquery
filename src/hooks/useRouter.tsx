@@ -19,5 +19,7 @@ export function useRouter() {
 export type RoutePath =
   | '/'
   | '/login'
-  | `/find/${number}`
+  | `/todos`
+  | `/todos/a`
+  | `/todos/b`
   ;

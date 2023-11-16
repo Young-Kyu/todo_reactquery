@@ -2,7 +2,7 @@ import axios, { AxiosHeaders, AxiosResponse } from "axios";
 import CustomServerError from "../systemConfig/CustomError";
 
 const interceptConfig = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: 'http://localhost:8080',
   withCredentials: true,
 });
 
@@ -11,7 +11,7 @@ interceptConfig.interceptors.request.use(
   async function (config) {
     try {
       return config;
-    } catch (err: InstanceType<Error>) {
+    } catch (err) {
       return Promise.reject(err);
     }
   }
@@ -25,7 +25,7 @@ interceptConfig.interceptors.response.use(
       //   throw new CustomServerError(500,'testError', 'testErrorCode');
       // }
       return res.data;
-    } catch (err: InstanceType<Error>) {
+    } catch (err) {
       return Promise.reject(err);
     }
   }
@@ -49,7 +49,7 @@ const POST = <T extends any>(url: string, method: ServiceMethodType, rest: any, 
   })
 };
 
-const baseSerive = async <T extends any>({ method, url, data, ...rest }: BaseSeriveRequest<T>) : Promise<any> => {
+const baseSerive = async <T extends any>({ method, url, data, ...rest }: BaseSeriveRequest<T>): Promise<any> => {
   let callback;
 
   if (method === 'get') {
@@ -58,7 +58,7 @@ const baseSerive = async <T extends any>({ method, url, data, ...rest }: BaseSer
     callback = POST;
   }
 
-  const response : AxiosResponse<any> = await callback(url,method,data,rest);
+  const response: AxiosResponse<any> = await callback(url, method, data, rest);
 
   return response;
 

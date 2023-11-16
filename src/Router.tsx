@@ -4,6 +4,9 @@ import Layout from './components/common/Layout';
 import MainLayout from './components/layouts/MainLayout';
 import LandingPage from './pages/LandingPage';
 import lazyWithPreload, { preloadAllComponents } from './systemConfig/lazyWithPreload';
+import PageConfig from './systemConfig/PageConfig';
+import A from './pages/todo/A';
+import B from './pages/todo/B';
 
 const TodoListPage = lazyWithPreload(() => import('./pages/todo/TodoList'));
 
@@ -29,11 +32,22 @@ const Router = (props: RouterProps): JSX.Element => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />} >
-          <Route index element={<LandingPage />} />
-          <Route path="todos" element={<MainLayout />} >
+          {/* login */}
+          <Route index element={
+            <PageConfig requireAuth={false}>
+              <LandingPage />
+            </PageConfig>}
+          />
+          <Route
+            path="todos"
+            element={
+              <PageConfig>
+                <MainLayout />
+              </PageConfig>
+            }>
             <Route index element={<TodoListPage />} />
-            <Route path={'a'} element={<TodoListPage />} />
-            <Route path={'b'} element={<TodoListPage />} />
+            <Route path={'a'} element={<A />} />
+            <Route path={'b'} element={<B />} />
           </Route>
         </Route>
       </Routes>

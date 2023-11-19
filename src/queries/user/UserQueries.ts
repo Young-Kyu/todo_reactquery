@@ -39,7 +39,7 @@ export const useUserQueries = () => {
   const FetchUserInfo = (userToken: string, enable?: boolean) => {
 
     const nonefetch = userToken.length > 0 && enable;
-    const fetcher = () => userServiceInstance.getUserInfo(userToken)
+    const fetcher = () => userServiceInstance.getMyProfile(userToken)
     const result = useQuery({
       queryKey: [QueryKeys.LOGOUT],
       queryFn: fetcher,
@@ -52,11 +52,11 @@ export const useUserQueries = () => {
     return result;
   };
 
-  const FetchUsertest = () => {
+  const FetchUserGoogleLogin = () => {
 
-    const fetcher = () => userServiceInstance.test()
+    const fetcher = () => userServiceInstance.googleLoginTest()
     const result = useQuery({
-      queryKey: [QueryKeys.LOGOUT],
+      queryKey: [QueryKeys.GOOGLE],
       queryFn: fetcher,
       enabled: false,
       retry: 0,
@@ -70,6 +70,6 @@ export const useUserQueries = () => {
     FetchUserLogin,
     FetchUserLogout,
     FetchUserInfo,
-    FetchUsertest
+    FetchUserGoogleLogin
   }
 }

@@ -5,7 +5,7 @@ import baseSerive, { BaseSeriveRequest } from "../BaseService";
 class UserService {
 
   public postUserLogin = async (id: string, password: string) => {
-    const apiRequest: BaseSeriveRequest<{ userId: string, password: string }> = {
+    const apiRequest: BaseSeriveRequest = {
       method: "get",
       url: '/login',
       params: {
@@ -18,7 +18,7 @@ class UserService {
   }
 
   public postUserLogout = async () => {
-    const apiRequest: BaseSeriveRequest<undefined> = {
+    const apiRequest: BaseSeriveRequest = {
       method: "get",
       url: '/logout',
     }
@@ -26,26 +26,32 @@ class UserService {
     return result;
   }
 
-  public getUserInfo = async (userToken: string) => {
-    const apiRequest: BaseSeriveRequest<{ userToken: string }> = {
+  public getMyProfile = async (userToken: string) => {
+    const apiRequest: BaseSeriveRequest = {
       method: "get",
-      url: '/api/me',
-      params: {
-        userToken: userToken
-      }
+      url: '/user/my',
     }
-    const result: void = await baseSerive(apiRequest);
+    const result: { emailAddress: string; userLevel: number } = await baseSerive(apiRequest);
     return result;
   }
 
   public test = async () => {
-    const apiRequest: BaseSeriveRequest<undefined> = {
+    const apiRequest: BaseSeriveRequest = {
       method: "get",
       url: '/api/user',
     }
     const result: void = await baseSerive(apiRequest);
     return result;
-  }
+  };
+
+  public googleLoginTest = async () => {
+    const apiRequest: BaseSeriveRequest = {
+      method: "get",
+      url: '/auth/google',
+    }
+    const result: { url: string } = await baseSerive(apiRequest);
+    return result;
+  };
 
 }
 

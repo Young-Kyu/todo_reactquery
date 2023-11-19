@@ -6,6 +6,7 @@ import { sessionStorageServiceInstance } from '../../service/common/SessionStora
 import { useUserQueries } from '../../queries/user/UserQueries';
 import { observer } from 'mobx-react-lite';
 import { useStore } from '../../stores/StoreProvider';
+import { S_Appbar } from '../../style/appbar/S_Appbar';
 
 
 interface MainLayoutProps {
@@ -36,7 +37,9 @@ const AppBar = observer(() => {
   const { data } = FetchUserInfo(userToken || '', !userStore.isLoggedIn);
   console.log(data);
   return (
-    <div></div>
+    <S_Appbar>
+      dfawioehf
+    </S_Appbar>
   );
 });
 

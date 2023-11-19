@@ -13,13 +13,13 @@ const B = (props: IProps): JSX.Element => {
 
   const router = useRouter();
   const { FetchUserInfo } = useUserQueries();
-  const { data = { name: '' } } = FetchUserInfo(sessionStorageServiceInstance.getUserToken() ?? '');
+  const { data = { emailAddress: '' } } = FetchUserInfo(sessionStorageServiceInstance.getUserToken() ?? '');
   const test = () => {
     router.push('/todos')
   }
   return (
     <div>
-      {data.name + ''}
+      {data.emailAddress + ''}
       <button onClick={test}>go to Todos</button>
     </div>
   )

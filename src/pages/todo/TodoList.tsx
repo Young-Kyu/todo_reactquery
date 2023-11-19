@@ -37,7 +37,7 @@ const TodoList = observer(() => {
   // const { FetchTodoList } = useTodoQueries();
   // const { data = { name: '' }, isFetching } = FetchTodoList();
   const { FetchUserInfo } = useUserQueries();
-  const { data = { name: '' } } = FetchUserInfo(sessionStorageServiceInstance.getUserToken() ?? '');
+  const { data = { emailAddress: '' } } = FetchUserInfo(sessionStorageServiceInstance.getUserToken() ?? '');
   const router = useRouter();
 
   const test = () => {
@@ -52,7 +52,7 @@ const TodoList = observer(() => {
 
   return (
     <>
-      <div>child {data.name + ''}</div>
+      <div>child {data.emailAddress + ''}</div>
       <button onClick={test}>go to A</button>
       <button onClick={logout}>logout</button>
     </>

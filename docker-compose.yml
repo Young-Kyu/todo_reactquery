@@ -1,0 +1,21 @@
+# docker-compose의 버전
+version: "3.7"
+services:
+  react-query:
+    container_name: react-query
+    # Dockerfile이 있는 위치
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # volumes:
+    #   - ".:/app"
+    #   - "/app/node_modules"
+
+    # 포트 포워딩
+    ports:
+      - "45645:3000"
+    environment:
+      # process env 설정
+      - NODE_ENV=production
+    stdin_open: true
+    tty: true

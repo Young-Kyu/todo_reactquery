@@ -1,46 +1,58 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 환경 구성
+  1. 라이브러리: React
+  2. 언어: TypeScript
+  3. 상태관리: React-query(서버 상태) / MobX(클라이언트 상태)
+  4. 테스트: jest
+  5. 스타일링: styled-components
 
-## Available Scripts
+## 실행 순서
 
-In the project directory, you can run:
+  1. npm install
+  2. npm run start(:dev / :production) # 각 실행 환경별로 cli 별도
 
-### `npm start`
+## 프로젝트 구성
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+/src
+  + components: 화면 별 사용되는 각종 Component 폴더
+  + hooks: Custom Hook 폴더
+  + pages: 각 화면 파일 폴더
+  + queries: query Provider 및 react query 관련 폴더
+  + server: API 기능 개발 전 msw 관련 폴더
+  + service: API 통신 관련 폴더
+  + stores: 클라이언트 상태관리 (MobX) 관련 폴더
+  + styles: styled-components로 작성된 파일 폴더
+  + systemConfig: Error / lazy loading / 화면 접근제한 관련 폴더
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 주요 기능 개발
 
-### `npm test`
+  1. 화면 컴포넌트 lazy로딩 및 preload적용
+    + 랜딩 화면을 제외한 다른 화면 lazy 로딩을 적용하여 main.js의 번들링 사이즈를 줄여 초기 화면 TTV 향상
+    + 300ms 이후 별도 화면 chunk preload를 적용해 화면 이동 시 끊김없는 사용자 경험 향상
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  2. CustomErrorBoundary 개발
+    + UI 내 Uncatched Error 발생 시 에러가 발생 된 UI를 대체하는 Error Component 개발
 
-### `npm run build`
+  3. useRouter Custom Hook 개발
+    + routing 가능한 URL Type을 명시하여 Router Push 관련 로직 개발 시 개발 실수를 줄이기 위해 개발
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  4. API Fetching Suspense적용
+    + API 호출 상태가 Pending인 경우 해당 컴포넌트 UI 로딩 요소 사용자에게 제공
+    + 컴포넌트 별로 분기 되어있어 Waterfall 방식이 아닌 병렬적으로 로딩되게끔 개발
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  5. 구글 OAuth로그인 및 JWT Token 기반 로그인 개발
+    + 어드민 웹을 고려하여 JWT를 Session Storage에 저장
+    + 미 로그인: 랜딩화면 제외 타 화면 이동 불가
+    + 로그인: 랜딩화면 이동 불가
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  6. User List 화면 개발
+    + Pagination 및 email 기반 Like 검색 기능 개발
 
-### `npm run eject`
+  7. Test Code 작성
+    + ErrorBoundary / User Api Test 코드 작성 (**.spec.tsx)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  8. 실행 환경 분기처리
+    + .env-cmd 라이브러리를 통한 local, dev, production 환경 변수 분기처리
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  9. API 통신 관련 공통 처리 함수 및 Error Handler 구현
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).

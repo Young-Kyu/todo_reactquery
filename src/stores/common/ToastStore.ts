@@ -1,20 +1,32 @@
 import RootStore from "../Store";
-import { action, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 class ToastStore {
   rootStore;
 
-  count : number = 0;
-  constructor(root : RootStore){
+  count: number = 0;
+  showToast: boolean = false;
+  constructor(root: RootStore) {
     this.rootStore = root;
-    makeObservable(this,{
+    makeObservable(this, {
       count: observable,
-      showToast : action.bound,
+      showToast: observable,
+
+      setShowToast: action,
+      showToastHandler: action.bound,
+
+      getShowToast: computed,
     })
   }
-  showToast(){
-    console.log('showToast');
-    console.log(this.count);
+
+  setShowToast(flag: boolean) {
+    this.showToast = flag;
+  }
+  showToastHandler() {
     this.count = this.count + 1;
+  }
+
+  get getShowToast() {
+    return this.showToast;
   }
 }
 

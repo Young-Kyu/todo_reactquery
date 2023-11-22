@@ -1,30 +1,9 @@
 import { AxiosResponse } from "axios";
 import baseSerive, { BaseSeriveRequest } from "../BaseService";
+import { UserListRequestDTO, UserListResponseDTO, UserResponseDTO } from "../../queries/user/model/UserModel";
 
 
 class UserService {
-
-  public postUserLogin = async (id: string, password: string) => {
-    const apiRequest: BaseSeriveRequest = {
-      method: "get",
-      url: '/login',
-      params: {
-        userId: 'userId',
-        password: 'password'
-      }
-    }
-    const result: { userToken: string } = await baseSerive(apiRequest);
-    return result;
-  }
-
-  public postUserLogout = async () => {
-    const apiRequest: BaseSeriveRequest = {
-      method: "get",
-      url: '/logout',
-    }
-    const result: void = await baseSerive(apiRequest);
-    return result;
-  }
 
   public getMyProfile = async (userToken: string) => {
     const apiRequest: BaseSeriveRequest = {
@@ -35,15 +14,6 @@ class UserService {
     return result;
   }
 
-  public test = async () => {
-    const apiRequest: BaseSeriveRequest = {
-      method: "get",
-      url: '/api/user',
-    }
-    const result: void = await baseSerive(apiRequest);
-    return result;
-  };
-
   public googleLoginTest = async () => {
     const apiRequest: BaseSeriveRequest = {
       method: "get",
@@ -53,6 +23,27 @@ class UserService {
     return result;
   };
 
+  public getUserList = async (request: UserListRequestDTO) => {
+    const apiRequest: BaseSeriveRequest = {
+      method: "get",
+      url: '/user/list',
+      data: request
+    }
+    const result: UserListResponseDTO = await baseSerive(apiRequest);
+    return result;
+  };
+
+  public getUserDetail = async (userId: string) => {
+    const apiRequest: BaseSeriveRequest = {
+      method: "get",
+      url: `/user/${userId}`,
+    }
+    const result: UserResponseDTO = await baseSerive(apiRequest);
+    return result;
+  };
+
 }
 
 export const userServiceInstance = new UserService();
+
+

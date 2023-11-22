@@ -1,7 +1,9 @@
 import styled from "styled-components";
 
 export const S_Appbar = styled.header`
-  width : 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   border-bottom: 1px solid black;
-  height: 50px;
+  padding: 12px;
 `

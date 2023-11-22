@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { CustomError } from "../../queries/queryProvider";
 import CustomServerError from "../../systemConfig/CustomError";
+import { sessionStorageServiceInstance } from "../../service/common/SessionStorageService";
 
 interface Props {
   children?: React.ReactNode;
@@ -22,15 +23,19 @@ class CustomErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: CustomServerError | Error) {
-    if(error instanceof CustomServerError){
-      console.log(error);
-    }else{
-      console.log('123');
+    if (error instanceof CustomServerError) {
+      const { status } = error.getError();
+      if (status === 401) {
+        sessionStorageServiceInstance.deleteUserToken();
+        window.location.href = '/';
+      }
+    } else {
+      console.log('');
     }
   }
 
-  private retry(){
-    this.setState({ hasError : false});
+  private retry() {
+    this.setState({ hasError: false });
   }
 
   render() {

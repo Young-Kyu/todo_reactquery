@@ -18,8 +18,6 @@ export function useRouter() {
 
 export type RoutePath =
   | '/'
-  | '/login'
-  | `/todos`
-  | `/todos/a`
-  | `/todos/b`
+  | `/users`
+  | `/users/${string}`
   ;

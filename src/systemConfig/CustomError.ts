@@ -2,21 +2,21 @@
 /**
  * @params staus : number, message : string, statusCode : string
  */
-class CustomServerError{
+class CustomServerError {
   private status = 0;
   private message = '';
   private statusCode = '';
-  constructor(status : number, message : string, statusCode : string){
+  constructor(status: number, message: string, statusCode: string) {
     this.status = status;
     this.message = message;
     this.statusCode = statusCode;
   }
 
-  getError(){
+  getError() {
     return {
-      status : this.status,
-      message : this.message,
-      statusCode : this.statusCode
+      status: this.status,
+      message: this.message,
+      statusCode: this.statusCode
     }
   }
 

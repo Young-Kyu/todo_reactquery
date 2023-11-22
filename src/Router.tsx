@@ -5,10 +5,9 @@ import MainLayout from './components/layouts/MainLayout';
 import LandingPage from './pages/LandingPage';
 import lazyWithPreload, { preloadAllComponents } from './systemConfig/lazyWithPreload';
 import PageConfig from './systemConfig/PageConfig';
-import A from './pages/todo/A';
-import B from './pages/todo/B';
+import UserDetailPage from './pages/user/UserDetail';
 
-const TodoListPage = lazyWithPreload(() => import('./pages/todo/TodoList'));
+const UserListPage = lazyWithPreload(() => import('./pages/user/UserList'));
 
 interface RouterProps {
 
@@ -39,15 +38,14 @@ const Router = (props: RouterProps): JSX.Element => {
             </PageConfig>}
           />
           <Route
-            path="todos"
+            path="users"
             element={
               <PageConfig>
                 <MainLayout />
               </PageConfig>
             }>
-            <Route index element={<TodoListPage />} />
-            <Route path={'a'} element={<A />} />
-            <Route path={'b'} element={<B />} />
+            <Route index element={<UserListPage />} />
+            <Route path={":userId"} element={<UserDetailPage />} />
           </Route>
         </Route>
       </Routes>

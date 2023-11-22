@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { QueryKeys } from "../QueryKeys";
 import { userServiceInstance } from "../../service/user/UserService";
+import { UserListRequestDTO } from "./model/UserModel";
 
 const USER_STAIL_TIME = 60 * 1000 * 1;
 
@@ -8,46 +9,17 @@ export const useUserQueries = () => {
 
   const queryClient = useQueryClient();
 
-  const FetchUserLogin = (id: string, password: string) => {
-    const fetcher = () => userServiceInstance.postUserLogin(id, password)
-    const result = useQuery({
-      queryKey: [QueryKeys.LOGIN],
-      queryFn: fetcher,
-      enabled: false,
-      retry: 0,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      cacheTime: 0
-    });
-    return result;
-  };
-
-  const FetchUserLogout = () => {
-    const fetcher = () => userServiceInstance.postUserLogout()
-    const result = useQuery({
-      queryKey: [QueryKeys.LOGOUT],
-      queryFn: fetcher,
-      enabled: false,
-      retry: 0,
-      refetchOnMount: false,
-      refetchOnWindowFocus: false,
-      cacheTime: 0
-    });
-    return result;
-  };
-
   const FetchUserInfo = (userToken: string, enable?: boolean) => {
 
     const nonefetch = userToken.length > 0 && enable;
     const fetcher = () => userServiceInstance.getMyProfile(userToken)
     const result = useQuery({
-      queryKey: [QueryKeys.LOGOUT],
+      queryKey: [QueryKeys.GET_ME],
       queryFn: fetcher,
       enabled: nonefetch,
       retry: 0,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
-      // staleTime: USER_STAIL_TIME
     });
     return result;
   };
@@ -66,10 +38,32 @@ export const useUserQueries = () => {
     return result;
   };
 
+  const FetchUserList = (request: UserListRequestDTO) => {
+    const fetcher = () => userServiceInstance.getUserList(request);
+    const result = useQuery({
+      queryKey: [QueryKeys.USER_LIST, request.page, request.search],
+      queryFn: fetcher,
+      refetchOnWindowFocus: false,
+    });
+
+    return result;
+  }
+
+  const FetchUserDetail = (userId: string) => {
+    const fetcher = () => userServiceInstance.getUserDetail(userId);
+    const result = useQuery({
+      queryKey: [QueryKeys.USER_DETAIL, userId],
+      queryFn: fetcher,
+      refetchOnWindowFocus: false,
+      enabled: userId !== '',
+    });
+    return result;
+  }
+
   return {
-    FetchUserLogin,
-    FetchUserLogout,
     FetchUserInfo,
-    FetchUserGoogleLogin
+    FetchUserGoogleLogin,
+    FetchUserList,
+    FetchUserDetail,
   }
 }

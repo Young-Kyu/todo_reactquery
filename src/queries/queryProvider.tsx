@@ -1,27 +1,27 @@
-import { DefaultOptions, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { useStore } from "../stores/StoreProvider";
 import CustomServerError from "../systemConfig/CustomError";
+import { useRouter } from "../hooks/useRouter";
+import { sessionStorageServiceInstance } from "../service/common/SessionStorageService";
+import { DefaultOptions, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 interface QueryProviderProps {
   children: React.ReactNode;
 }
 
 export interface CustomError {
-  status: number;
+  reponse: {
+    status: number;
+  }
 }
 
 const QueryProvider = ({ children }: QueryProviderProps) => {
 
   const { toastStore } = useStore();
 
-  const commonErrorNotificationHandler = (serverError: CustomServerError | CustomError): void => {
+  const commonErrorNotificationHandler = (serverError: CustomServerError | CustomError | any): void => {
 
     let errorStatus = serverError instanceof CustomServerError ? serverError.getError().status : serverError.status;
-    console.log('??');
-    switch (errorStatus) {
-      default:
-        toastStore.showToast();
-    }
+    toastStore.showToastHandler();
   };
 
   const queryErrorHandler = (error: CustomError | CustomServerError): void => {

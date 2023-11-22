@@ -39,20 +39,20 @@ interceptConfig.interceptors.response.use(
   }
 );
 
-const GET = <T extends any>(url: string, method: ServiceMethodType, rest: any, params?: T) => {
+const GET = <T extends any>(url: string, method: ServiceMethodType, data: any, rest?: any) => {
   return interceptConfig({
     url,
     method: 'get',
-    params: params,
+    params: data,
     ...rest
   })
 }
 
-const POST = <T extends any>(url: string, method: ServiceMethodType, rest: any, params?: T) => {
+const Mutation = <T extends any>(url: string, method: ServiceMethodType, data: T, rest?: any) => {
   return interceptConfig({
     url,
     method,
-    data: params,
+    data: data,
     ...rest
   })
 };
@@ -63,17 +63,26 @@ const baseSerive = async <T extends any>({ method, url, data, ...rest }: BaseSer
   if (method === 'get') {
     callback = GET;
   } else {
-    callback = POST;
+    callback = Mutation;
   }
 
-  const response: AxiosResponse<RestApiResponse> = await callback(url, method, data, rest);
+  try {
 
-  if (response && response.data) {
-    if (response.data.successOrNot === 'Y') {
-      return response.data.data;
+    const response: AxiosResponse<RestApiResponse> = await callback(url, method, data, rest);
+
+    if (response && response.data) {
+
+      if (response.data.successOrNot === 'Y') {
+        return response.data.data;
+      }
     }
+    return response
+  } catch (err: any) {
+    if (err.response && err.response.data && err.response.data.successOrNot) {
+      throw new CustomServerError(err.response.status, err.response.data.statusCode, err.response.data.statusCode);
+    }
+    throw err;
   }
-  return response
 
 }
 

@@ -32,7 +32,7 @@ const PageConfig = (props: PageConfigProps): JSX.Element => {
     sessionStorageServiceInstance.getUserToken() &&
     unAuthRoutes.findIndex((target) => target.toLowerCase() === pathname.toLowerCase()) >= 0
   ) {
-    return <Navigate replace to={'/todos'} />;
+    return <Navigate replace to={'/users'} />;
   }
 
   return (
